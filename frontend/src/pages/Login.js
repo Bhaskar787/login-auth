@@ -29,7 +29,7 @@ function Login() {
             return handleError('All Credential must be Required')
         }
         try {
-            const url = 'http://localhost:8080/auth/login'
+            const url =  `${process.env.REACT_APP_API_URL}/auth/login` 
             const response = await fetch(url,{
                 method:'POST',
                 headers:{
