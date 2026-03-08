@@ -1,26 +1,30 @@
-const express = require('express')
-const app = express()
-const bodyParser= require('body-parser')
-const cors= require('cors')
-const AuthRouter = require('./Routes/AuthRouter')
-const ProductsRouter = require('./Routes/ProductsRouter')
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
+require("dotenv").config();
+require("./Models/db");
 
-require('dotenv').config()
-require('./Models/db')
+const AuthRouter = require("./Routes/AuthRouter");
+const ProductsRouter = require("./Routes/ProductsRouter");
 
-const PORT= process.env.PORT || 8080
+const PORT = process.env.PORT || 8081;
 
-app.get('/ping',(req,res)=>{
-    res.send('PONg')
-})
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
 
-app.use(bodyParser.json())
-app.use(cors())
+// Test route
+app.get("/ping", (req, res) => {
+  res.send("PONG");
+});
 
-app.use('/auth', AuthRouter)
-app.use('/products', ProductsRouter)
+// Routes
+app.use("/auth", AuthRouter);
+app.use("/products", ProductsRouter);
 
-app.listen(PORT,()=>{
-    console.log(`app is listening on port ${PORT}`)
-})
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
